@@ -19,7 +19,7 @@ export default function Map(){
     }, [mapLat, mapLng]);
 
     useEffect(() => {
-        if(geolocationPosition) setMapPosition(geolocationPosition);
+        if(geolocationPosition) setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
     }, [geolocationPosition]);
     
     return <div className={styles.mapContainer}>
