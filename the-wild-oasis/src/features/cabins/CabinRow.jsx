@@ -1,6 +1,12 @@
 import styled from "styled-components";
-import React from 'react';
+import React, {useState} from 'react';
+
 import {formatCurrency} from "../../utils/helpers.js";
+import CreateCabinForm from "./CreateCabinForm.jsx";
+import useDeleteCabin from "./useDeleteCabin.js";
+import {HiSquare2Stack} from "react-icons/hi2";
+import {HiPencil, HiTrash} from "react-icons/hi";
+import useCreateCabin from "./useCreateCabin.js";
 
 const TableRow = styled.div`
   display: grid;
@@ -42,17 +48,38 @@ const Discount = styled.div`
 `;
 
 function CabinRow({cabin}) {
-    const {image, name, maxCapacity, regularPrice, discount} = cabin;
-    return (
+    const {id: cabinId, image, name, maxCapacity, regularPrice, discount, description} = cabin;
+    const [showForm, setShowForm]  = useState(false);
+
+   const {isDeleting, deleteCabin} = useDeleteCabin();
+   const {isCreating, createCabin} = useCreateCabin();
+
+    function handleDuplicate() {
+        createCabin({
+            name: `Copy of ${name}`,
+            maxCapacity,
+            regularPrice,
+            discount,
+            image,
+            description,
+        });
+    }
+   
+    return (<>
         <TableRow role="row">
             <Img src={image}/>
             <Cabin>{name}</Cabin>
             <div>Fits up to {maxCapacity} guests</div>
             <Price>{formatCurrency(regularPrice)}</Price>
-            <Discount>{formatCurrency(discount)}</Discount>
-            <button>Delete</button>
+            {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
+            <div>
+                <button disabled={isCreating} onClick={handleDuplicate}><HiSquare2Stack/></button>
+                <button onClick={() => setShowForm(show => !show)}><HiPencil /></button>
+                <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}><HiTrash /></button>
+            </div>
         </TableRow>
-    );
+    {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+    </>);
 }
 
 export default CabinRow;
