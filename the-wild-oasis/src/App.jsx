@@ -2,6 +2,8 @@ import React from 'react';
 import GlobalStyles from "./styles/GlobalStyles.js";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {Toaster} from "react-hot-toast";
 
 import Dashboard from "./pages/Dashboard.jsx";
 import Bookings from "./pages/Bookings.jsx";
@@ -12,8 +14,6 @@ import Account from "./pages/Account.jsx";
 import Login from "./pages/Login.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {Toaster} from "react-hot-toast";
 import Booking from "./pages/Booking.jsx";
 import Checkin from "./features/check-in-out/Checkin.jsx";
 
