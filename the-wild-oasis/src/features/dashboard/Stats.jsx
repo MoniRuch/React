@@ -13,14 +13,14 @@ function Stats({bookings, confirmStays, numDays, cabinCount}) {
     const sales = bookings.reduce((acc,curr) => acc+curr.totalPrice, 0);
     const numStays = confirmStays.length;
     const occupation =
-        confirmStays.reduce((acc, cur) => acc + cur.numNights, 0) /
+        confirmStays.reduce((acc, cur) => acc+cur.numNights, 0) /
         (numDays * cabinCount);
     
     return (<>
         <Stat title="Bookings" color="blue" icon={<HiOutlineBriefcase />} value={numBookings}/>
         <Stat title="Sales" color="green" icon={<HiOutlineBanknotes />} value={formatCurrency(sales)}/>
         <Stat title="Check ins" color="indigo" icon={<HiOutlineCalendarDays />} value={numStays}/>
-        <Stat title="Occupancy rate" color="yellow" icon={<HiOutlineChartBar />} value={occupation}/>
+        <Stat title="Occupancy rate" color="yellow" icon={<HiOutlineChartBar />} value={`${Math.round(occupation * 100)}%`}/>
     </>);
 }
 
